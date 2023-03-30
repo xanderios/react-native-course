@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   StyleSheet,
-  StatusBar,
   Text,
   View,
   TextInput,
@@ -10,19 +9,16 @@ import {
   Alert,
 } from "react-native";
 
-const COLORS = {
-  "blue-900": "#1D3557",
-  "blue-500": "#457B9D",
-  "blue-300": "#A8DADC",
-  "blue-100": "#F1FAEE",
-  "red-500": "#E63946",
-};
+import { TodoItem } from "./src/types";
+import TodoCard from "./src/components/TodoCard";
+import { COLORS } from "./src/styles/global";
+import TodoInput from "./src/components/TodoInput";
 
 export default function App() {
-  const [todoInput, setTodoInput] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todoInput, setTodoInput] = useState<string>("");
+  const [todos, setTodos] = useState<TodoItem[]>([]);
 
-  const handleTodoInput = (text) => {
+  const handleTodoInput = (text: string) => {
     setTodoInput(text);
   };
 
@@ -41,7 +37,7 @@ export default function App() {
     setTodos([
       ...todos,
       {
-        todo: todoInput,
+        title: todoInput,
         dateCreated: formattedDate,
       },
     ]);
@@ -50,14 +46,8 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <StatusBar style="default" backgroundColor={COLORS["blue-500"]} />
       <View style={styles.inputContainer}>
-        <TextInput
-          value={todoInput}
-          onChangeText={handleTodoInput}
-          style={styles.textInput}
-          placeholder="Add Todos here!"
-        />
+        <TodoInput value={todoInput} onChangeText={handleTodoInput} />
         <Pressable onPress={handleAddTodo} style={styles.addTodoBtn}>
           <Text style={styles.buttonText}>Add Todo</Text>
         </Pressable>
@@ -66,24 +56,14 @@ export default function App() {
       <View style={styles.horizontalLine} />
 
       {todos.length <= 0 ? (
-        <Text style={styles.todoText}>List of Todos...</Text>
+        <Text>List of Todos...</Text>
       ) : (
         <FlatList
           data={todos}
           alwaysBounceVertical={false}
-          keyExtractor={(item, index) => index}
-          renderItem={(todoData) => (
-            <View
-              style={[
-                styles.todoCard,
-                { marginTop: todoData.index == 0 ? 0 : 16 },
-              ]}
-            >
-              <Text style={styles.todoText}>{todoData.item.todo}</Text>
-              <Text style={styles.todoDateCreated}>
-                {todoData.item.dateCreated}
-              </Text>
-            </View>
+          keyExtractor={(item, index) => String(index)}
+          renderItem={({ item, index }) => (
+            <TodoCard todoData={item} index={index} />
           )}
         />
       )}
@@ -103,14 +83,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  textInput: {
-    flex: 1,
-    marginRight: 16,
-    backgroundColor: COLORS["blue-100"],
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-  },
   addTodoBtn: {
     paddingVertical: 12,
     paddingHorizontal: 12,
@@ -125,17 +97,5 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: COLORS["blue-500"],
     marginVertical: 16,
-  },
-  todoCard: {
-    backgroundColor: COLORS["blue-500"],
-    padding: 16,
-    borderRadius: 8,
-  },
-  todoText: {
-    color: COLORS["blue-100"],
-  },
-  todoDateCreated: {
-    fontSize: 8,
-    color: COLORS["blue-300"],
   },
 });
