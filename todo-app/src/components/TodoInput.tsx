@@ -1,18 +1,21 @@
-import React from "react";
+import { useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
 
 import { COLORS } from "../styles/global";
 
-type Props = {
-  value: string;
-  onChangeText: (text: string) => void;
-};
+type Props = {};
 
-export default function TodoInput({ value, onChangeText }: Props) {
+export default function TodoInput({}: Props) {
+  const [todoInput, setTodoInput] = useState<string>("");
+
+  const handleTodoInput = (text: string) => {
+    setTodoInput(text);
+  };
+
   return (
     <TextInput
-      value={value}
-      onChangeText={onChangeText}
+      value={todoInput}
+      onChangeText={handleTodoInput}
       style={styles.textInput}
       placeholder="Add Todos here!"
     />

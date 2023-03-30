@@ -1,73 +1,40 @@
-import { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Pressable,
-  FlatList,
-  Alert,
-} from "react-native";
+import { useContext } from "react";
+import { StyleSheet, Text, View, Pressable, FlatList } from "react-native";
 
-import { TodoItem } from "./src/types";
+import { TodosContext, TodosProvider } from "./src/contexts/TodosContext";
 import TodoCard from "./src/components/TodoCard";
 import { COLORS } from "./src/styles/global";
 import TodoInput from "./src/components/TodoInput";
 
 export default function App() {
-  const [todoInput, setTodoInput] = useState<string>("");
-  const [todos, setTodos] = useState<TodoItem[]>([]);
-
-  const handleTodoInput = (text: string) => {
-    setTodoInput(text);
-  };
-
-  const handleAddTodo = () => {
-    if (todoInput == "") {
-      Alert.alert(
-        "Todos can't be empty!",
-        "Your todo should have at least 1 character."
-      );
-      return;
-    }
-
-    const date = new Date();
-    const formattedDate = date.toLocaleDateString();
-
-    setTodos([
-      ...todos,
-      {
-        title: todoInput,
-        dateCreated: formattedDate,
-      },
-    ]);
-    setTodoInput("");
-  };
+  const { todos, addTodo } = useContext(TodosContext);
 
   return (
-    <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TodoInput value={todoInput} onChangeText={handleTodoInput} />
-        <Pressable onPress={handleAddTodo} style={styles.addTodoBtn}>
-          <Text style={styles.buttonText}>Add Todo</Text>
-        </Pressable>
+    <TodosProvider>
+      <View style={styles.appContainer}>
+        <View style={styles.inputContainer}>
+          <TodoInput />
+          <Pressable onPress={addTodo} style={styles.addTodoBtn}>
+            <Text style={styles.buttonText}>Add Todo</Text>
+          </Pressable>
+        </View>
+
+        <View style={styles.horizontalLine} />
+
+        {todos.length <= 0 ? (
+          <Text>List of Todos...</Text>
+        ) : (
+          <FlatList
+            data={todos}
+            alwaysBounceVertical={false}
+            keyExtractor={(item, index) => String(index)}
+            renderItem={({ item, index }) => (
+              <TodoCard todoData={item} index={index} />
+            )}
+          />
+        )}
       </View>
-
-      <View style={styles.horizontalLine} />
-
-      {todos.length <= 0 ? (
-        <Text>List of Todos...</Text>
-      ) : (
-        <FlatList
-          data={todos}
-          alwaysBounceVertical={false}
-          keyExtractor={(item, index) => String(index)}
-          renderItem={({ item, index }) => (
-            <TodoCard todoData={item} index={index} />
-          )}
-        />
-      )}
-    </View>
+    </TodosProvider>
   );
 }
 
