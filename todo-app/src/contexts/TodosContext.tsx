@@ -1,20 +1,28 @@
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
+
 import { TodoItem } from "../types";
 
-interface todoContextData {
+type TodosContextType = {
   todos: TodoItem[];
   addTodo: () => void;
+  completeTodo: (id: number) => void;
+  updateTodo: (updatedTodo: TodoItem) => void;
   todoInput: string;
   handleTodoInput: (text: string) => void;
-}
+};
 
-interface TodosProviderProps {
-  children: ReactNode;
-}
+export const TodosContext = createContext<TodosContextType>({
+  todos: [],
+  addTodo: () => {},
+  completeTodo: () => {},
+  updateTodo: () => {},
+  todoInput: "",
+  handleTodoInput: () => {},
+});
 
-export const TodosContext = createContext({} as todoContextData);
-
-export function TodosProvider({ children }: TodosProviderProps) {
+export const TodosProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [todos, setTodos] = useState<TodoItem[]>([]);
   const [todoInput, setTodoInput] = useState<string>("");
 
@@ -23,26 +31,41 @@ export function TodosProvider({ children }: TodosProviderProps) {
   }
 
   function addTodo() {
-    if (todoInput == "") {
-      return;
-    }
-
-    const date = new Date();
-    const formattedDate = date.toLocaleDateString();
-
-    const newTodo = {
+    console.log(todoInput);
+    const todo: TodoItem = {
       title: todoInput,
-      dateCreated: formattedDate,
+      dateCreated: new Date().toLocaleDateString(),
+      id: Math.floor(Math.random() * (999 - 1 + 1) + 1),
     };
-    handleTodoInput("");
-    setTodos([...todos, newTodo]);
+
+    setTodos((todos) => [...todos, todo]);
+    setTodoInput("");
   }
+
+  const completeTodo = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const updateTodo = (updatedTodo: TodoItem) => {
+    setTodos(
+      todos.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
+    );
+  };
 
   return (
     <TodosContext.Provider
-      value={{ todos, addTodo, todoInput, handleTodoInput }}
+      value={{
+        todos,
+        addTodo,
+        completeTodo,
+        updateTodo,
+        todoInput,
+        handleTodoInput,
+      }}
     >
       {children}
     </TodosContext.Provider>
   );
-}
+};
+
+export const useTodos = () => useContext(TodosContext);

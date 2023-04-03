@@ -1,21 +1,19 @@
-import { useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
+import { useTodos } from "../contexts/TodosContext";
 
-import { COLORS } from "../styles/global";
+import COLORS from "../constants/colors";
 
 type Props = {};
 
 export default function TodoInput({}: Props) {
-  const [todoInput, setTodoInput] = useState<string>("");
-
-  const handleTodoInput = (text: string) => {
-    setTodoInput(text);
-  };
+  const { todoInput, handleTodoInput } = useTodos();
 
   return (
     <TextInput
       value={todoInput}
-      onChangeText={handleTodoInput}
+      onChangeText={(text) => {
+        handleTodoInput(text);
+      }}
       style={styles.textInput}
       placeholder="Add Todos here!"
     />
@@ -26,7 +24,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     marginRight: 16,
-    backgroundColor: COLORS["blue-100"],
+    backgroundColor: COLORS.white,
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,

@@ -1,35 +1,36 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { COLORS } from "../styles/global";
+import { StyleSheet, Text, View, Pressable } from "react-native";
+import { useTodos } from "../contexts/TodosContext";
+import COLORS from "../constants/colors";
+import { TodoItem } from "../types";
 
 type Props = {
-  todoData: {
-    title: string;
-    dateCreated: string;
-  };
+  todoData: TodoItem;
   index: number;
 };
 
 export default function TodoCard({ todoData, index }: Props) {
+  const { completeTodo } = useTodos();
   return (
-    <View style={[styles.todoCard, { marginTop: index == 0 ? 0 : 16 }]}>
-      <Text style={styles.todoText}>{todoData.title}</Text>
-      <Text style={styles.todoDateCreated}>{todoData.dateCreated}</Text>
-    </View>
+    <Pressable onPress={() => completeTodo(todoData.id)}>
+      <View style={[styles.todoCard, { marginTop: index == 0 ? 0 : 16 }]}>
+        <Text style={styles.todoText}>{todoData.title}</Text>
+        <Text style={styles.todoDateCreated}>{todoData.dateCreated}</Text>
+      </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   todoCard: {
-    backgroundColor: COLORS["blue-500"],
+    backgroundColor: COLORS.primary,
     padding: 16,
     borderRadius: 8,
   },
   todoText: {
-    color: COLORS["blue-100"],
+    color: COLORS.white,
   },
   todoDateCreated: {
     fontSize: 8,
-    color: COLORS["blue-300"],
+    color: COLORS.offWhite,
   },
 });
