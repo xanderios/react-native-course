@@ -1,62 +1,62 @@
-import { StyleSheet, Text, View, FlatList, StatusBar } from "react-native";
+import { StyleSheet, View, FlatList, StatusBar } from "react-native";
 
 import COLORS from "../constants/colors";
 
 import TodoCard from "../components/TodoCard";
-import TodoInput from "../components/TodoInput";
+import TodoModal from "../components/TodoModal";
 import ButtonComponent from "../components/ButtonComponent";
 import { useTodos } from "../contexts/TodosContext";
 
 type Props = {};
 
 export default function Todos({}: Props) {
-  const { todos, addTodo } = useTodos();
+  const { todosModal, openTodosModal, todos, addTodo } = useTodos();
 
   return (
-    <View style={styles.appContainer}>
+    <View style={styles.todosContainer}>
       <StatusBar barStyle="light-content" />
-      <View style={styles.inputContainer}>
-        <TodoInput />
-        <ButtonComponent onPress={addTodo} text="Add Todo" />
-      </View>
+      <TodoModal />
 
-      <View style={styles.horizontalLine} />
-
-      {todos.length <= 0 ? (
-        <Text style={styles.todoPlaceholder}>List of Todos...</Text>
+      {todos.length > 0 ? (
+        <View style={{ width: "100%", height: "100%" }}>
+          <FlatList
+            data={todos}
+            alwaysBounceVertical={false}
+            keyExtractor={(item, index) => String(index)}
+            contentContainerStyle={{ marginBottom: 16 }}
+            renderItem={({ item, index }) => (
+              <TodoCard todoData={item} index={index} />
+            )}
+          />
+          <ButtonComponent
+            text="Add another Todo"
+            onPress={openTodosModal}
+            customStyle={styles.buttonWrapper}
+          />
+        </View>
       ) : (
-        <FlatList
-          data={todos}
-          alwaysBounceVertical={false}
-          keyExtractor={(item, index) => String(index)}
-          renderItem={({ item, index }) => (
-            <TodoCard todoData={item} index={index} />
-          )}
-        />
+        <View style={styles.buttonWrapper}>
+          <ButtonComponent
+            text="Add your first Todo!"
+            onPress={openTodosModal}
+            customStyle={styles.buttonWrapper}
+          />
+        </View>
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  appContainer: {
-    flex: 1,
+  todosContainer: {
     backgroundColor: COLORS.offWhite,
     padding: 16,
-    paddingVertical: 48,
-  },
-  inputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    height: "100%",
+    justifyContent: "center",
     alignItems: "center",
   },
-  horizontalLine: {
-    height: 1,
-    width: "100%",
+  buttonWrapper: {
+    borderRadius: 8,
     backgroundColor: COLORS.primary,
-    marginVertical: 16,
-  },
-  todoPlaceholder: {
-    color: COLORS.primary,
   },
 });

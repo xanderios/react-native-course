@@ -27,10 +27,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   todoText: {
+    fontSize: 20,
     color: COLORS.white,
   },
   todoDateCreated: {
-    fontSize: 8,
+    fontSize: 10,
     color: COLORS.offWhite,
   },
 });

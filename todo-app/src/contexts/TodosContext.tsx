@@ -1,8 +1,12 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
 import { TodoItem } from "../types";
+import todosMock from "../mocks/todos";
 
 type TodosContextType = {
+  todosModal: boolean;
+  openTodosModal: () => void;
+  closeTodosModal: () => void;
   todos: TodoItem[];
   addTodo: () => void;
   completeTodo: (id: number) => void;
@@ -12,6 +16,9 @@ type TodosContextType = {
 };
 
 export const TodosContext = createContext<TodosContextType>({
+  todosModal: false,
+  openTodosModal: () => {},
+  closeTodosModal: () => {},
   todos: [],
   addTodo: () => {},
   completeTodo: () => {},
@@ -23,8 +30,17 @@ export const TodosContext = createContext<TodosContextType>({
 export const TodosProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const [todosModal, setShowModal] = useState<boolean>(false);
+  const [todos, setTodos] = useState<TodoItem[]>(todosMock);
   const [todoInput, setTodoInput] = useState<string>("");
+
+  function openTodosModal() {
+    setShowModal(true);
+  }
+
+  function closeTodosModal() {
+    setShowModal(false);
+  }
 
   function handleTodoInput(text: string) {
     setTodoInput(text);
@@ -40,6 +56,7 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
 
     setTodos((todos) => [...todos, todo]);
     setTodoInput("");
+    closeTodosModal();
   }
 
   const completeTodo = (id: number) => {
@@ -55,6 +72,9 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <TodosContext.Provider
       value={{
+        todosModal,
+        openTodosModal,
+        closeTodosModal,
         todos,
         addTodo,
         completeTodo,

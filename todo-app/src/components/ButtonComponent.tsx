@@ -1,26 +1,33 @@
-import { Pressable, Text, StyleSheet } from "react-native";
+import {
+  Pressable,
+  Text,
+  StyleSheet,
+  StyleSheetProperties,
+  ViewStyle,
+} from "react-native";
 
 import COLORS from "../constants/colors";
 
 type Props = {
   text?: string;
   onPress?: () => void;
+  customStyle?: ViewStyle;
 };
 
-export default function ButtonComponent({ text, onPress }: Props) {
+export default function ButtonComponent({ text, onPress, customStyle }: Props) {
   return (
-    <Pressable onPress={onPress} style={styles.addTodoBtn}>
+    <Pressable onPress={onPress} style={[styles.buttonWrapper, customStyle]}>
       <Text style={styles.buttonText}>{text}</Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  addTodoBtn: {
+  buttonWrapper: {
     paddingVertical: 12,
     paddingHorizontal: 12,
-    backgroundColor: COLORS.primary,
     borderRadius: 8,
+    textAlign: "center",
   },
   buttonText: {
     color: COLORS.white,
