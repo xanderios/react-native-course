@@ -16,11 +16,11 @@ export default function ButtonComponent({
     <Pressable
       onPress={onPress}
       className={classnames(
-        "p-3 rounded-lg items-center bg-purple-800",
+        "p-3 rounded-lg items-center bg-blue-700",
         classNameProp
       )}
     >
-      <Text className="text-white">{text}</Text>
+      <Text className="text-white font-bold">{text}</Text>
     </Pressable>
   );
 }

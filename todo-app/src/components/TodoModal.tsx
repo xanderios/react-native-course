@@ -57,7 +57,7 @@ export default function TodoModal({}: Props) {
             <ButtonComponent
               onPress={addTodo}
               text="Add Todo"
-              classNameProp="bg-purple-800"
+              classNameProp="bg-blue-700"
             />
           </View>
         </View>

@@ -15,7 +15,7 @@ export default function TodoCard({ todo, index }: Props) {
       <View
         className={`bg-gray-700 p-4 rounded-lg ${index == 0 ? "mt-0" : "mt-4"}`}
       >
-        <Text className="text-xl text-white">{todo.title}</Text>
+        <Text className="text-xl text-white font-bold">{todo.title}</Text>
         {todo.description && (
           <Text className="mt-2 text-white">{todo.description}</Text>
         )}

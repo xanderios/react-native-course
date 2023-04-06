@@ -1,4 +1,4 @@
-import { View, FlatList, StatusBar } from "react-native";
+import { View, FlatList } from "react-native";
 
 import TodoCard from "src/components/TodoCard";
 import TodoModal from "src/components/TodoModal";
@@ -12,7 +12,6 @@ export default function Todos({}: Props) {
 
   return (
     <View className="bg-gray-900 bgpur p-4 h-full justify-center items-center">
-      <StatusBar barStyle="light-content" />
       <TodoModal />
 
       {todos.length > 0 ? (
@@ -29,14 +28,14 @@ export default function Todos({}: Props) {
           <ButtonComponent
             text="Add another Todo"
             onPress={openTodosModal}
-            classNameProp="mt-4 rounded-lg bg-purple-800"
+            classNameProp="mt-4 rounded-lg bg-blue-700"
           />
         </View>
       ) : (
         <ButtonComponent
           text="Add your first Todo!"
           onPress={openTodosModal}
-          classNameProp="mt-4 rounded-lg bg-purple-800"
+          classNameProp="mt-4 rounded-lg bg-blue-700"
         />
       )}
     </View>
