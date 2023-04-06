@@ -1,4 +1,4 @@
-import { View, FlatList } from "react-native";
+import { View, FlatList, ScrollView } from "react-native";
 
 import TodoCard from "src/components/TodoCard";
 import TodoModal from "src/components/TodoModal";
@@ -11,25 +11,25 @@ export default function Todos({}: Props) {
   const { openTodosModal, todos } = useTodos();
 
   return (
-    <View className="bg-gray-900 bgpur p-4 h-full justify-center items-center">
+    <View className="bg-gray-900 h-full justify-center items-center">
       <TodoModal />
 
       {todos.length > 0 ? (
         <View className="w-full h-full">
-          <FlatList
-            data={todos}
-            alwaysBounceVertical={false}
-            keyExtractor={(item, index) => String(index)}
-            contentContainerStyle={{ marginBottom: 16 }}
-            renderItem={({ item, index }) => (
-              <TodoCard todo={item} index={index} />
-            )}
-          />
-          <ButtonComponent
-            text="Add another Todo"
-            onPress={openTodosModal}
-            classNameProp="mt-4 rounded-lg bg-blue-700"
-          />
+          <View className="flex-1 pt-4 px-4">
+            <ScrollView alwaysBounceVertical={true}>
+              {todos.map((todo) => (
+                <TodoCard todo={todo} index={todo.id} />
+              ))}
+            </ScrollView>
+          </View>
+          <View className="p-4 bg-gray-800">
+            <ButtonComponent
+              text="Add another Todo"
+              onPress={openTodosModal}
+              classNameProp="bg-blue-700"
+            />
+          </View>
         </View>
       ) : (
         <ButtonComponent

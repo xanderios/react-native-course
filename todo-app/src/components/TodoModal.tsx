@@ -30,8 +30,8 @@ export default function TodoModal({}: Props) {
             onChangeText={(text) => {
               handleTodoTitleInput(text);
             }}
-            className="bg-gray-900 text-white border border-white rounded-lg p-4"
-            placeholderTextColor={colors.white}
+            className="bg-white text-gray-900 border-b-4 border-gray-300 rounded-lg p-4"
+            placeholderTextColor={colors.gray[500]}
             placeholder="Title"
           />
           <TextInput
@@ -39,9 +39,9 @@ export default function TodoModal({}: Props) {
             onChangeText={(text) => {
               handleTodoDescriptionInput(text);
             }}
-            className="bg-gray-900 text-white border border-white rounded-lg p-4 mt-4 h-24"
+            className="bg-white text-gray-900 border-b-4 border-gray-200 rounded-lg p-4 mt-4 h-24"
             style={{ verticalAlign: "top" }} // TODO: className="align-top" does not work
-            placeholderTextColor={colors.white}
+            placeholderTextColor={colors.gray[500]}
             placeholder="Description"
           />
         </View>
@@ -50,14 +50,14 @@ export default function TodoModal({}: Props) {
             <ButtonComponent
               onPress={closeTodosModal}
               text="Cancel"
-              classNameProp="bg-gray-700"
+              classNameProp="bg-gray-700 border-gray-800"
             />
           </View>
           <View className="flex-1">
             <ButtonComponent
               onPress={addTodo}
               text="Add Todo"
-              classNameProp="bg-blue-700"
+              classNameProp="bg-blue-700 border-blue-800"
             />
           </View>
         </View>
