@@ -1,10 +1,4 @@
-import {
-  Pressable,
-  Text,
-  StyleSheet,
-  StyleSheetProperties,
-  ViewStyle,
-} from "react-native";
+import { Pressable, Text, StyleSheet, ViewStyle } from "react-native";
 
 import COLORS from "../constants/colors";
 

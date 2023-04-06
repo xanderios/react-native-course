@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
-import { TodoItem } from "../types";
-import todosMock from "../mocks/todos";
+import { TodoItem } from "src/types/index";
+import todosMock from "src/mocks/todos";
 
 type TodosContextType = {
   todosModal: boolean;
@@ -11,8 +11,10 @@ type TodosContextType = {
   addTodo: () => void;
   completeTodo: (id: number) => void;
   updateTodo: (updatedTodo: TodoItem) => void;
-  todoInput: string;
-  handleTodoInput: (text: string) => void;
+  todoTitleInput: string;
+  handleTodoTitleInput: (text: string) => void;
+  todoDescriptionInput: string;
+  handleTodoDescriptionInput: (text: string) => void;
 };
 
 export const TodosContext = createContext<TodosContextType>({
@@ -23,8 +25,10 @@ export const TodosContext = createContext<TodosContextType>({
   addTodo: () => {},
   completeTodo: () => {},
   updateTodo: () => {},
-  todoInput: "",
-  handleTodoInput: () => {},
+  todoTitleInput: "",
+  handleTodoTitleInput: () => {},
+  todoDescriptionInput: "",
+  handleTodoDescriptionInput: () => {},
 });
 
 export const TodosProvider: React.FC<{ children: ReactNode }> = ({
@@ -32,7 +36,8 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [todosModal, setShowModal] = useState<boolean>(false);
   const [todos, setTodos] = useState<TodoItem[]>(todosMock);
-  const [todoInput, setTodoInput] = useState<string>("");
+  const [todoTitleInput, setTodoInput] = useState<string>("");
+  const [todoDescriptionInput, setTodoDescriptionInput] = useState<string>("");
 
   function openTodosModal() {
     setShowModal(true);
@@ -42,20 +47,24 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
     setShowModal(false);
   }
 
-  function handleTodoInput(text: string) {
+  function handleTodoTitleInput(text: string) {
     setTodoInput(text);
   }
 
+  function handleTodoDescriptionInput(text: string) {
+    setTodoDescriptionInput(text);
+  }
+
   function addTodo() {
-    console.log(todoInput);
     const todo: TodoItem = {
-      title: todoInput,
+      title: todoTitleInput,
+      description: todoDescriptionInput || undefined,
       dateCreated: new Date().toLocaleDateString(),
       id: Math.floor(Math.random() * (999 - 1 + 1) + 1),
     };
 
     setTodos((todos) => [...todos, todo]);
-    setTodoInput("");
+    handleTodoTitleInput("");
     closeTodosModal();
   }
 
@@ -79,8 +88,10 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
         addTodo,
         completeTodo,
         updateTodo,
-        todoInput,
-        handleTodoInput,
+        todoTitleInput,
+        handleTodoTitleInput,
+        todoDescriptionInput,
+        handleTodoDescriptionInput,
       }}
     >
       {children}

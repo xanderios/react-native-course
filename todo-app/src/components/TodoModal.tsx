@@ -2,25 +2,40 @@ import { Modal, StyleSheet, TextInput, View } from "react-native";
 import { useTodos } from "../contexts/TodosContext";
 
 import COLORS from "../constants/colors";
-import ButtonComponent from "./ButtonComponent";
+import ButtonComponent from "../components/ButtonComponent";
 
 type Props = {};
 
 export default function TodoModal({}: Props) {
-  const { todosModal, closeTodosModal, todoInput, handleTodoInput, addTodo } =
-    useTodos();
+  const {
+    todosModal,
+    closeTodosModal,
+    todoTitleInput,
+    handleTodoTitleInput,
+    todoDescriptionInput,
+    handleTodoDescriptionInput,
+    addTodo,
+  } = useTodos();
 
   return (
     <Modal visible={todosModal} animationType="slide">
       <View style={styles.modalWrapper}>
         <View style={styles.inputContainer}>
           <TextInput
-            value={todoInput}
+            value={todoTitleInput}
             onChangeText={(text) => {
-              handleTodoInput(text);
+              handleTodoTitleInput(text);
             }}
-            style={styles.textInput}
-            placeholder="Add Todos here!"
+            style={styles.input}
+            placeholder="Title"
+          />
+          <TextInput
+            value={todoDescriptionInput}
+            onChangeText={(text) => {
+              handleTodoDescriptionInput(text);
+            }}
+            style={[styles.input, styles.descriptionInput]}
+            placeholder="Description"
           />
         </View>
         <View style={styles.buttonsContainer}>
@@ -51,11 +66,15 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 16,
   },
-  textInput: {
+  input: {
     backgroundColor: COLORS.white,
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
+  },
+  descriptionInput: {
+    marginTop: 16,
+    height: 100,
   },
   buttonsContainer: {
     width: "100%",

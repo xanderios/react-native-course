@@ -1,4 +1,4 @@
-import { TodoItem } from "../../types";
+import { TodoItem } from "src/types/index";
 
 const todos: TodoItem[] = [
   {
@@ -8,6 +8,8 @@ const todos: TodoItem[] = [
   },
   {
     title: "Limpar o quarto",
+    description:
+      "- Arrumar a cama \n - Guardar brinquedos \n - Organizar livros",
     dateCreated: "03/04/2023",
     id: 120,
   },

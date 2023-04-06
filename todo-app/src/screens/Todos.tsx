@@ -1,11 +1,11 @@
 import { StyleSheet, View, FlatList, StatusBar } from "react-native";
 
-import COLORS from "../constants/colors";
+import COLORS from "src/constants/colors";
 
-import TodoCard from "../components/TodoCard";
-import TodoModal from "../components/TodoModal";
-import ButtonComponent from "../components/ButtonComponent";
-import { useTodos } from "../contexts/TodosContext";
+import TodoCard from "src/components/TodoCard";
+import TodoModal from "src/components/TodoModal";
+import ButtonComponent from "src/components/ButtonComponent";
+import { useTodos } from "src/contexts/TodosContext";
 
 type Props = {};
 
@@ -25,7 +25,7 @@ export default function Todos({}: Props) {
             keyExtractor={(item, index) => String(index)}
             contentContainerStyle={{ marginBottom: 16 }}
             renderItem={({ item, index }) => (
-              <TodoCard todoData={item} index={index} />
+              <TodoCard todo={item} index={index} />
             )}
           />
           <ButtonComponent
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonWrapper: {
+    marginTop: 16,
     borderRadius: 8,
     backgroundColor: COLORS.primary,
   },
