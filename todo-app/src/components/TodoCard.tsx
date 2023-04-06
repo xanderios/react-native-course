@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 
-import COLORS from "../constants/colors";
-import { useTodos } from "../contexts/TodosContext";
-import { TodoItem } from "../types/index";
+import COLORS from "src/constants/colors";
+import { useTodos } from "src/contexts/TodosContext";
+import { TodoItem } from "src/types/index";
 
 type Props = {
   todo: TodoItem;

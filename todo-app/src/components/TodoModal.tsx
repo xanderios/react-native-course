@@ -1,8 +1,8 @@
 import { Modal, StyleSheet, TextInput, View } from "react-native";
-import { useTodos } from "../contexts/TodosContext";
+import { useTodos } from "src/contexts/TodosContext";
 
-import COLORS from "../constants/colors";
-import ButtonComponent from "../components/ButtonComponent";
+import COLORS from "src/constants/colors";
+import ButtonComponent from "src/components/ButtonComponent";
 
 type Props = {};
 
