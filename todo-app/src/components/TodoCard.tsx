@@ -26,7 +26,7 @@ export default function TodoCard({ todo, index }: Props) {
 
 const styles = StyleSheet.create({
   todoCard: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS["navy-600"],
     padding: 16,
     borderRadius: 8,
   },

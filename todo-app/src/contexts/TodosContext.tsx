@@ -65,6 +65,7 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
 
     setTodos((todos) => [...todos, todo]);
     handleTodoTitleInput("");
+    handleTodoDescriptionInput("");
     closeTodosModal();
   }
 

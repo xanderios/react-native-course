@@ -35,13 +35,11 @@ export default function Todos({}: Props) {
           />
         </View>
       ) : (
-        <View style={styles.buttonWrapper}>
-          <ButtonComponent
-            text="Add your first Todo!"
-            onPress={openTodosModal}
-            customStyle={styles.buttonWrapper}
-          />
-        </View>
+        <ButtonComponent
+          text="Add your first Todo!"
+          onPress={openTodosModal}
+          customStyle={styles.buttonWrapper}
+        />
       )}
     </View>
   );

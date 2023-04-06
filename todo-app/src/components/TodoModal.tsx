@@ -1,4 +1,4 @@
-import { Modal, StyleSheet, TextInput, View } from "react-native";
+import { Modal, StyleSheet, TextInput, View, Image } from "react-native";
 import { useTodos } from "src/contexts/TodosContext";
 
 import COLORS from "src/constants/colors";
@@ -21,12 +21,17 @@ export default function TodoModal({}: Props) {
     <Modal visible={todosModal} animationType="slide">
       <View style={styles.modalWrapper}>
         <View style={styles.inputContainer}>
+          <Image
+            source={require("~/assets/images/goal.png")}
+            style={styles.todoImage}
+          />
           <TextInput
             value={todoTitleInput}
             onChangeText={(text) => {
               handleTodoTitleInput(text);
             }}
             style={styles.input}
+            placeholderTextColor={COLORS.white}
             placeholder="Title"
           />
           <TextInput
@@ -35,19 +40,20 @@ export default function TodoModal({}: Props) {
               handleTodoDescriptionInput(text);
             }}
             style={[styles.input, styles.descriptionInput]}
+            placeholderTextColor={COLORS.white}
             placeholder="Description"
           />
         </View>
         <View style={styles.buttonsContainer}>
           <ButtonComponent
-            onPress={addTodo}
-            text="Add Todo"
-            customStyle={styles.addTodoButton}
-          />
-          <ButtonComponent
             onPress={closeTodosModal}
             text="Cancel"
             customStyle={styles.cancelButton}
+          />
+          <ButtonComponent
+            onPress={addTodo}
+            text="Add Todo"
+            customStyle={styles.addTodoButton}
           />
         </View>
       </View>
@@ -58,23 +64,34 @@ export default function TodoModal({}: Props) {
 const styles = StyleSheet.create({
   modalWrapper: {
     height: "100%",
-    backgroundColor: COLORS.offWhite,
+    backgroundColor: COLORS["navy-900"],
     alignItems: "center",
     justifyContent: "center",
+  },
+  todoImage: {
+    borderRadius: 999,
+    alignSelf: "center",
+    height: 100,
+    width: 100,
+    margin: 20,
   },
   inputContainer: {
     width: "100%",
     paddingHorizontal: 16,
   },
   input: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS["navy-900"],
+    color: COLORS.white,
+    borderWidth: 1,
+    borderColor: COLORS.white,
     borderRadius: 8,
-    paddingVertical: 8,
+    paddingVertical: 16,
     paddingHorizontal: 16,
   },
   descriptionInput: {
     marginTop: 16,
     height: 100,
+    verticalAlign: "top",
   },
   buttonsContainer: {
     width: "100%",
@@ -87,7 +104,7 @@ const styles = StyleSheet.create({
   addTodoButton: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS["navy-600"],
   },
   cancelButton: {
     flex: 1,

@@ -1,7 +1,7 @@
 const COLORS = {
-  offWhite: "#f6e7cb",
-  primary: "#dd9787",
-  white: "#FFFFFF",
+  "navy-900": "#011627",
+  "navy-600": "#273647",
+  white: "#FDFFFC",
   red: "#f23c5f",
 };
 
