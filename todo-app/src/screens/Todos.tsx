@@ -10,7 +10,7 @@ import { useTodos } from "src/contexts/TodosContext";
 type Props = {};
 
 export default function Todos({}: Props) {
-  const { todosModal, openTodosModal, todos, addTodo } = useTodos();
+  const { openTodosModal, todos } = useTodos();
 
   return (
     <View style={styles.todosContainer}>
