@@ -1,7 +1,7 @@
-import { Modal, StyleSheet, TextInput, View, Image } from "react-native";
-import { useTodos } from "src/contexts/TodosContext";
+import { Modal, TextInput, View, Image } from "react-native";
+import colors from "tailwindcss/colors";
 
-import COLORS from "src/constants/colors";
+import { useTodos } from "src/contexts/TodosContext";
 import ButtonComponent from "src/components/ButtonComponent";
 
 type Props = {};
@@ -19,19 +19,19 @@ export default function TodoModal({}: Props) {
 
   return (
     <Modal visible={todosModal} animationType="slide">
-      <View style={styles.modalWrapper}>
-        <View style={styles.inputContainer}>
+      <View className="h-full bg-blue-950 items-center justify-center">
+        <View className="w-full px-4">
           <Image
             source={require("~/assets/images/goal.png")}
-            style={styles.todoImage}
+            className="rounded-full self-center h-24 w-24 m-5"
           />
           <TextInput
             value={todoTitleInput}
             onChangeText={(text) => {
               handleTodoTitleInput(text);
             }}
-            style={styles.input}
-            placeholderTextColor={COLORS.white}
+            className="bg-blue-950 text-white border border-white rounded-lg p-4"
+            placeholderTextColor={colors.white}
             placeholder="Title"
           />
           <TextInput
@@ -39,76 +39,24 @@ export default function TodoModal({}: Props) {
             onChangeText={(text) => {
               handleTodoDescriptionInput(text);
             }}
-            style={[styles.input, styles.descriptionInput]}
-            placeholderTextColor={COLORS.white}
+            className="bg-blue-950 text-white border border-white rounded-lg p-4 mt-4 h-24 align-top"
+            placeholderTextColor={colors.white}
             placeholder="Description"
           />
         </View>
-        <View style={styles.buttonsContainer}>
+        <View className="w-24 flex-row justify-center gap-4 mt-4 px-4">
           <ButtonComponent
             onPress={closeTodosModal}
             text="Cancel"
-            customStyle={styles.cancelButton}
+            className="flex-1 items-center bg-blue-800"
           />
           <ButtonComponent
             onPress={addTodo}
             text="Add Todo"
-            customStyle={styles.addTodoButton}
+            className="flex-1 items-center bg-red-500"
           />
         </View>
       </View>
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  modalWrapper: {
-    height: "100%",
-    backgroundColor: COLORS["navy-900"],
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  todoImage: {
-    borderRadius: 999,
-    alignSelf: "center",
-    height: 100,
-    width: 100,
-    margin: 20,
-  },
-  inputContainer: {
-    width: "100%",
-    paddingHorizontal: 16,
-  },
-  input: {
-    backgroundColor: COLORS["navy-900"],
-    color: COLORS.white,
-    borderWidth: 1,
-    borderColor: COLORS.white,
-    borderRadius: 8,
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-  },
-  descriptionInput: {
-    marginTop: 16,
-    height: 100,
-    verticalAlign: "top",
-  },
-  buttonsContainer: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 16,
-    marginTop: 16,
-    paddingHorizontal: 16,
-  },
-  addTodoButton: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: COLORS["navy-600"],
-  },
-  cancelButton: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: COLORS.red,
-  },
-});

@@ -1,29 +1,18 @@
-import { Pressable, Text, StyleSheet, ViewStyle } from "react-native";
-
-import COLORS from "src/constants/colors";
+import { Pressable, Text } from "react-native";
 
 type Props = {
   text?: string;
   onPress?: () => void;
-  customStyle?: ViewStyle;
+  className?: string;
 };
 
-export default function ButtonComponent({ text, onPress, customStyle }: Props) {
+export default function ButtonComponent({ text, onPress, className }: Props) {
   return (
-    <Pressable onPress={onPress} style={[styles.buttonWrapper, customStyle]}>
-      <Text style={styles.buttonText}>{text}</Text>
+    <Pressable
+      onPress={onPress}
+      className={`p-3 rounded-lg text-center ${className}`}
+    >
+      <Text className="text-white">{text}</Text>
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  buttonWrapper: {
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    textAlign: "center",
-  },
-  buttonText: {
-    color: COLORS.white,
-  },
-});

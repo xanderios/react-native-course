@@ -1,6 +1,4 @@
-import { StyleSheet, View, FlatList, StatusBar } from "react-native";
-
-import COLORS from "src/constants/colors";
+import { View, FlatList, StatusBar } from "react-native";
 
 import TodoCard from "src/components/TodoCard";
 import TodoModal from "src/components/TodoModal";
@@ -13,12 +11,12 @@ export default function Todos({}: Props) {
   const { openTodosModal, todos } = useTodos();
 
   return (
-    <View style={styles.todosContainer}>
+    <View className="bg-blue-950 p-4 h-full justify-center items-center">
       <StatusBar barStyle="light-content" />
       <TodoModal />
 
       {todos.length > 0 ? (
-        <View style={{ width: "100%", height: "100%" }}>
+        <View className="w-full h-full">
           <FlatList
             data={todos}
             alwaysBounceVertical={false}
@@ -31,31 +29,16 @@ export default function Todos({}: Props) {
           <ButtonComponent
             text="Add another Todo"
             onPress={openTodosModal}
-            customStyle={styles.buttonWrapper}
+            className="mt-4 rounded-lg bg-blue-800"
           />
         </View>
       ) : (
         <ButtonComponent
           text="Add your first Todo!"
           onPress={openTodosModal}
-          customStyle={styles.buttonWrapper}
+          className="mt-4 rounded-lg bg-blue-800"
         />
       )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  todosContainer: {
-    backgroundColor: COLORS.offWhite,
-    padding: 16,
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonWrapper: {
-    marginTop: 16,
-    borderRadius: 8,
-    backgroundColor: COLORS.primary,
-  },
-});
