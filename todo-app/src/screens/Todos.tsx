@@ -11,7 +11,7 @@ export default function Todos({}: Props) {
   const { openTodosModal, todos } = useTodos();
 
   return (
-    <View className="bg-blue-950 p-4 h-full justify-center items-center">
+    <View className="bg-gray-900 bgpur p-4 h-full justify-center items-center">
       <StatusBar barStyle="light-content" />
       <TodoModal />
 
@@ -29,14 +29,14 @@ export default function Todos({}: Props) {
           <ButtonComponent
             text="Add another Todo"
             onPress={openTodosModal}
-            className="mt-4 rounded-lg bg-blue-800"
+            classNameProp="mt-4 rounded-lg bg-purple-800"
           />
         </View>
       ) : (
         <ButtonComponent
           text="Add your first Todo!"
           onPress={openTodosModal}
-          className="mt-4 rounded-lg bg-blue-800"
+          classNameProp="mt-4 rounded-lg bg-purple-800"
         />
       )}
     </View>

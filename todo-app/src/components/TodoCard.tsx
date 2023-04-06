@@ -13,7 +13,7 @@ export default function TodoCard({ todo, index }: Props) {
   return (
     <Pressable onPress={() => completeTodo(todo.id)}>
       <View
-        className={`bg-blue-800 p-4 rounded-lg ${index == 0 ? "mt-0" : "mt-4"}`}
+        className={`bg-gray-700 p-4 rounded-lg ${index == 0 ? "mt-0" : "mt-4"}`}
       >
         <Text className="text-xl text-white">{todo.title}</Text>
         {todo.description && (

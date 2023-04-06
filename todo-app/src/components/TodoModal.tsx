@@ -19,7 +19,7 @@ export default function TodoModal({}: Props) {
 
   return (
     <Modal visible={todosModal} animationType="slide">
-      <View className="h-full bg-blue-950 items-center justify-center">
+      <View className="flex-1 bg-gray-900 items-center justify-center">
         <View className="w-full px-4">
           <Image
             source={require("~/assets/images/goal.png")}
@@ -30,7 +30,7 @@ export default function TodoModal({}: Props) {
             onChangeText={(text) => {
               handleTodoTitleInput(text);
             }}
-            className="bg-blue-950 text-white border border-white rounded-lg p-4"
+            className="bg-gray-900 text-white border border-white rounded-lg p-4"
             placeholderTextColor={colors.white}
             placeholder="Title"
           />
@@ -39,22 +39,27 @@ export default function TodoModal({}: Props) {
             onChangeText={(text) => {
               handleTodoDescriptionInput(text);
             }}
-            className="bg-blue-950 text-white border border-white rounded-lg p-4 mt-4 h-24 align-top"
+            className="bg-gray-900 text-white border border-white rounded-lg p-4 mt-4 h-24"
+            style={{ verticalAlign: "top" }} // TODO: className="align-top" does not work
             placeholderTextColor={colors.white}
             placeholder="Description"
           />
         </View>
-        <View className="w-24 flex-row justify-center gap-4 mt-4 px-4">
-          <ButtonComponent
-            onPress={closeTodosModal}
-            text="Cancel"
-            className="flex-1 items-center bg-blue-800"
-          />
-          <ButtonComponent
-            onPress={addTodo}
-            text="Add Todo"
-            className="flex-1 items-center bg-red-500"
-          />
+        <View className="flex-row justify-center gap-x-4 mt-4 px-4">
+          <View className="flex-1">
+            <ButtonComponent
+              onPress={closeTodosModal}
+              text="Cancel"
+              classNameProp="bg-gray-700"
+            />
+          </View>
+          <View className="flex-1">
+            <ButtonComponent
+              onPress={addTodo}
+              text="Add Todo"
+              classNameProp="bg-purple-800"
+            />
+          </View>
         </View>
       </View>
     </Modal>
