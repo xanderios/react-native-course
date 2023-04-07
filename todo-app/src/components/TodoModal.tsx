@@ -8,7 +8,7 @@ type Props = {};
 
 export default function TodoModal({}: Props) {
   const {
-    todosModal,
+    showTodosModal,
     closeTodosModal,
     todoTitleInput,
     handleTodoTitleInput,
@@ -18,8 +18,8 @@ export default function TodoModal({}: Props) {
   } = useTodos();
 
   return (
-    <Modal visible={todosModal} animationType="slide">
-      <View className="flex-1 bg-gray-900 items-center justify-center">
+    <Modal visible={showTodosModal} animationType="slide">
+      <View className="flex-1 bg-gray-950 items-center justify-center">
         <View className="w-full px-4">
           <Image
             source={require("~/assets/images/goal.png")}

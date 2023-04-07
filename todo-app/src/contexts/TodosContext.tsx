@@ -1,14 +1,24 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 
+import { getStorageData, setStorageData } from "src/utils";
 import { TodoItem } from "src/types/index";
-import todosMock from "src/mocks/todos";
 
 type TodosContextType = {
-  todosModal: boolean;
+  showTodosModal: boolean;
   openTodosModal: () => void;
   closeTodosModal: () => void;
+  showHistoryModal: boolean;
+  openHistoryModal: () => void;
+  closeHistoryModal: () => void;
   todos: TodoItem[];
   addTodo: () => void;
+  deleteTodo: (id: number) => void;
   completeTodo: (id: number) => void;
   updateTodo: (updatedTodo: TodoItem) => void;
   todoTitleInput: string;
@@ -18,12 +28,16 @@ type TodosContextType = {
 };
 
 export const TodosContext = createContext<TodosContextType>({
-  todosModal: false,
+  showTodosModal: false,
   openTodosModal: () => {},
   closeTodosModal: () => {},
+  showHistoryModal: false,
+  openHistoryModal: () => {},
+  closeHistoryModal: () => {},
   todos: [],
   addTodo: () => {},
   completeTodo: () => {},
+  deleteTodo: (id: number) => {},
   updateTodo: () => {},
   todoTitleInput: "",
   handleTodoTitleInput: () => {},
@@ -34,17 +48,36 @@ export const TodosContext = createContext<TodosContextType>({
 export const TodosProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [todosModal, setShowModal] = useState<boolean>(false);
-  const [todos, setTodos] = useState<TodoItem[]>(todosMock);
+  const [showTodosModal, setShowTodosModal] = useState<boolean>(false);
+  const [showHistoryModal, setShowHistoryModal] = useState<boolean>(false);
+  const [todos, setTodos] = useState<TodoItem[]>([]);
   const [todoTitleInput, setTodoInput] = useState<string>("");
   const [todoDescriptionInput, setTodoDescriptionInput] = useState<string>("");
 
+  useEffect(() => {
+    getStorageData("todos").then((todos) => {
+      if (todos) setTodos(todos);
+    });
+  }, []);
+
+  useEffect(() => {
+    setStorageData("todos", todos);
+  }, [todos]);
+
   function openTodosModal() {
-    setShowModal(true);
+    setShowTodosModal(true);
   }
 
   function closeTodosModal() {
-    setShowModal(false);
+    setShowTodosModal(false);
+  }
+
+  function openHistoryModal() {
+    setShowHistoryModal(true);
+  }
+
+  function closeHistoryModal() {
+    setShowHistoryModal(false);
   }
 
   function handleTodoTitleInput(text: string) {
@@ -59,7 +92,8 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
     const todo: TodoItem = {
       title: todoTitleInput,
       description: todoDescriptionInput || undefined,
-      dateCreated: new Date().toLocaleDateString(),
+      createdAt: new Date().toLocaleDateString(),
+      complete: false,
       id: Math.floor(Math.random() * (999 - 1 + 1) + 1),
     };
 
@@ -69,8 +103,22 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
     closeTodosModal();
   }
 
-  const completeTodo = (id: number) => {
+  const deleteTodo = (id: number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const completeTodo = (id: number) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              complete: true,
+              completedAt: new Date().toLocaleDateString(),
+            }
+          : todo
+      )
+    );
   };
 
   const updateTodo = (updatedTodo: TodoItem) => {
@@ -82,11 +130,15 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <TodosContext.Provider
       value={{
-        todosModal,
+        showTodosModal,
         openTodosModal,
         closeTodosModal,
+        showHistoryModal,
+        openHistoryModal,
+        closeHistoryModal,
         todos,
         addTodo,
+        deleteTodo,
         completeTodo,
         updateTodo,
         todoTitleInput,
