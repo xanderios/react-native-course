@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from "react";
 
-import { getStorageData, setStorageData } from "src/utils";
+import { generateUniqueId, getStorageData, setStorageData } from "src/utils";
 import { TodoItem } from "src/types/index";
 
 type TodosContextType = {
@@ -94,7 +94,7 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
       description: todoDescriptionInput || undefined,
       createdAt: new Date().toLocaleDateString(),
       complete: false,
-      id: Math.floor(Math.random() * (999 - 1 + 1) + 1),
+      id: generateUniqueId(todos),
     };
 
     setTodos((todos) => [...todos, todo]);

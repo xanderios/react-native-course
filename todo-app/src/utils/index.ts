@@ -1,4 +1,5 @@
+import generateUniqueId from "./generateUniqueId";
 import getStorageData from "./getStorageData";
 import setStorageData from "./setStorageData";
 
-export { getStorageData, setStorageData };
+export { generateUniqueId, getStorageData, setStorageData };
