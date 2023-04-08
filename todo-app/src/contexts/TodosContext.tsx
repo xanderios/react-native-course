@@ -56,7 +56,16 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     getStorageData("todos").then((todos) => {
-      if (todos) setTodos(todos);
+      if (todos)
+        setTodos(
+          todos.map((item: TodoItem) => ({
+            ...item,
+            createdAt: new Date(item.createdAt),
+            completedAt: item.completedAt
+              ? new Date(item.completedAt)
+              : item.completedAt,
+          }))
+        );
     });
   }, []);
 
@@ -92,7 +101,7 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
     const todo: TodoItem = {
       title: todoTitleInput,
       description: todoDescriptionInput || undefined,
-      createdAt: new Date().toLocaleDateString(),
+      createdAt: new Date(),
       complete: false,
       id: generateUniqueId(todos),
     };
@@ -114,7 +123,7 @@ export const TodosProvider: React.FC<{ children: ReactNode }> = ({
           ? {
               ...todo,
               complete: true,
-              completedAt: new Date().toLocaleDateString(),
+              completedAt: new Date(),
             }
           : todo
       )

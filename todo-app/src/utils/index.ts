@@ -1,5 +1,6 @@
+import diffForHumans from "./diffForHumans";
 import generateUniqueId from "./generateUniqueId";
 import getStorageData from "./getStorageData";
 import setStorageData from "./setStorageData";
 
-export { generateUniqueId, getStorageData, setStorageData };
+export { diffForHumans, generateUniqueId, getStorageData, setStorageData };

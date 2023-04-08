@@ -1,8 +1,11 @@
 import { Text, View, Pressable } from "react-native";
 
+import { diffForHumans } from "src/utils";
+
 import { useTodos } from "src/contexts/TodosContext";
 import { TodoItem } from "src/types/index";
 import ButtonComponent from "./ButtonComponent";
+import { useEffect } from "react";
 
 type Props = {
   todo: TodoItem;
@@ -15,8 +18,9 @@ type Props = {
 
 export default function TodoCard({ todo, options }: Props) {
   const { deleteTodo, completeTodo } = useTodos();
+
   return (
-    <Pressable onPress={() => completeTodo(todo.id)}>
+    <Pressable>
       <View className="flex-row bg-gray-700 border-b-4 border-gray-800 p-4 rounded-lg mb-4">
         <View className="flex-[2]">
           <Text className="text-xl text-white font-bold">{todo.title}</Text>
@@ -25,12 +29,12 @@ export default function TodoCard({ todo, options }: Props) {
           )}
           {options.showCreatedAt && (
             <Text className="mt-2 text-xs text-white">
-              Created at: {todo.createdAt}
+              Created {diffForHumans(todo.createdAt)}
             </Text>
           )}
-          {options.showCompletedAt && (
+          {options.showCompletedAt && todo.completedAt && (
             <Text className="mt-2 text-xs text-white">
-              Completed at: {todo.completedAt}
+              Completed {diffForHumans(todo.completedAt)}
             </Text>
           )}
         </View>
